@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="User\Command\" />
+    <Folder Include="User\Query\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Task.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Task.Infrastructure.csproj" />
+    <ProjectReference Include="..\Persistance\Task.Persistance.csproj" />
+  </ItemGroup>
+
+</Project>

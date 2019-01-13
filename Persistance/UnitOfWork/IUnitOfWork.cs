@@ -5,7 +5,7 @@ using Task.Persistance.Repositories;
 
 namespace MK.UnitOfWork
 {
-    public interface IUnitOfWork<TContext> where TContext : DbContext, new()
+    public interface IUnitOfWork
     {
         /// <summary>
         /// Save method.

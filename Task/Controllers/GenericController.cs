@@ -10,10 +10,10 @@ namespace Task.Web.Controllers
            where TModel : class, IEntity, new()
              where TDto : class, new()
     {
-        private IServiceQuery<TDto,TModel> queryService;
+        private IServiceQuery<TModel, TDto> queryService;
         private ICommandService<TModel, TDto> commandService;
 
-        public GenericController(IServiceQuery<TDto,TModel> queryService, 
+        public GenericController(IServiceQuery<TModel,TDto> queryService, 
             ICommandService<TModel, TDto> commandService)
         {
             this.queryService = queryService;
@@ -25,13 +25,13 @@ namespace Task.Web.Controllers
             var result = await queryService.ListAsync();
             return Ok(result);
         }
-        //[HttpGet]
-        //[Route("{id:Guid}")]
-        //public virtual async Task<IActionResult> Get(Guid id)
-        //{
-        //    var result = await repository.ReadOneAsync(id);
-        //    return Ok(result);
-        //}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public virtual async Task<IActionResult> Get(Guid id)
+        {
+            var result = await queryService.GetAsync(id);
+            return Ok();
+        }
         [HttpPut]
         public virtual  IActionResult Put(TDto entity)
         {

@@ -15,7 +15,7 @@ namespace Task.Persistance.Repositories
     {
         protected DbContext DatabaseContext;
         protected DbSet<T> Set;
-        public Repository(DbContext DatabaseContext)
+        public Repository(TaskContext DatabaseContext)
         {
             this.DatabaseContext = DatabaseContext ?? throw new ArgumentNullException(nameof(DatabaseContext));
             this.Set = DatabaseContext.Set<T>();

@@ -11,5 +11,6 @@ namespace Task.Controllers
     [ApiController]
     public class DefaultController : ControllerBase
     {
+       
     }
 }

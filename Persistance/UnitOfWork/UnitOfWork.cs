@@ -7,24 +7,24 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Task.Persistance.Repositories;
 using Task.Domain;
+using Persistance.Models;
 
 namespace MK.UnitOfWork
 {
     /// <summary>  
     /// Unit of Work class responsible for DB transactions  
     /// </summary>  
-    public class UnitOfWork<TContext> : IDisposable, IUnitOfWork<TContext> where TContext 
-        : DbContext, new()
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
         #region Private member variables...
 
-        public DbContext _context = null;
+        public TaskContext _context = null;
 
         #endregion
 
         public UnitOfWork()
         {
-            this._context = new TContext();
+            this._context = new TaskContext();
         }
 
         #region Public member methods...

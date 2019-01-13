@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Task.Application.User.Model
+namespace Task.Application.Users.Model
 {
     public class UserDto
     {

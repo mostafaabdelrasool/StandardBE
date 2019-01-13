@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Persistance.Extensions;
 using Persistance.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using Task.Application.Extensions;
 
 namespace Task
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -30,8 +30,9 @@ namespace Task
             Configuration = builder.Build();
         }
 
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             #region Core2.1
@@ -46,6 +47,22 @@ namespace Task
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             #endregion
+            #region AppConfiguration
+            // Global access to Configuration
+            services.AddSingleton(c => Configuration);
+            #endregion
+            
+            #region Database 
+            services.AddDbContext<TaskContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            #endregion
+            #region MVC
+            services.AddMvc();
+            #endregion
+            #region DI
+            services.AddInfrastructure();
+            services.AddApplication();
+            #endregion
             #region CrossOriging
             services.AddCors();
             #endregion
@@ -56,11 +73,6 @@ namespace Task
                 c.SwaggerDoc("v1", new Info { Title = "MO API", Version = "v1" });
             });
             #endregion
-            #region Database 
-            services.AddDbContext<TaskContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            #endregion
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,11 +126,7 @@ namespace Task
                        builder.WithOrigins("http://localhost:4200")
                        .AllowAnyHeader().AllowAnyMethod());
             #endregion
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.UseAuthentication();
             app.Use(async (context, next) =>
             {
                 await next();
@@ -133,10 +141,7 @@ namespace Task
             app.UseMvcWithDefaultRoute();
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+
         }
     }
 }

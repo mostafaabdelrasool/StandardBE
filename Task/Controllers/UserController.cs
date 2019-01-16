@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Task.Application.Interfaces;
 using Task.Application.Users.Model;
 using Task.Domain;
-using Task.Web.Controllers;
 
 namespace Task.Controllers
 {

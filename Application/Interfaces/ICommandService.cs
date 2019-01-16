@@ -11,7 +11,7 @@ namespace Task.Application.Interfaces
         Task<TDto> CreateAsync(TDto value, string createdBy);
         Task<TDto> DeleteAsync(Guid id, string deletedBy);
         Task<TDto> RemoveAsync(Guid id, string removedBy);
-        TDto Update(TDto value, string updatedBy);
+        Task<TDto> Update(TDto value, string updatedBy);
 
     }
 }

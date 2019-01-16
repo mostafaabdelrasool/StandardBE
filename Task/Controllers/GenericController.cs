@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Task.Application.Interfaces;
 using Task.Domain;
 
-namespace Task.Web.Controllers
+namespace Task.Controllers
 {
     public class GenericController<TModel,TDto> : ControllerBase
            where TModel : class, IEntity, new()

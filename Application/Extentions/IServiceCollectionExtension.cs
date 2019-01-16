@@ -11,7 +11,7 @@ namespace Task.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddTransient<IServiceQuery<User, UserDto>, 
-                ServiceQuery<User, UserDto>>();
+                QueryService<User, UserDto>>();
             services.AddTransient<ICommandService<User, UserDto>,
               CommandService<User, UserDto>>();
             return services;

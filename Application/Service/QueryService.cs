@@ -9,12 +9,12 @@ using Task.Persistance.Interfaces;
 
 namespace Task.Application
 {
-    public class ServiceQuery<TModel, TDto> : IServiceQuery<TModel, TDto> 
+    public class QueryService<TModel, TDto> : IServiceQuery<TModel, TDto> 
         where TModel : class, IEntity, new()
         where TDto : class, new()
     {
         protected IRepository<TModel> repository;
-        public ServiceQuery(IRepository<TModel> repository)
+        public QueryService(IRepository<TModel> repository)
         {
             this.repository = repository;
         }

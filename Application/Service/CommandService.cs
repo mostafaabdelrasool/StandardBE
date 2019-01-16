@@ -24,6 +24,7 @@ namespace Task.Application.Service
             {
                 TModel model = Map(value);
                 var result = await repository.CreateAsync(model, createdBy);
+                await repository.SaveAsync();
                 return MapDto(result);
             }
             catch (Exception)
@@ -44,12 +45,13 @@ namespace Task.Application.Service
             var model = mapProperties.Map<TModel,TDto>(value, new TDto());
             return model;
         }
-        public TDto Update(TDto value, string updatedBy)
+        public async Task<TDto> Update(TDto value, string updatedBy)
         {
             try
             {
                 TModel model = Map(value);
                 var result =  repository.Update(model, updatedBy);
+                await repository.SaveAsync();
                 return MapDto(result);
             }
             catch (Exception)
@@ -63,6 +65,7 @@ namespace Task.Application.Service
             try
             {
                 var result= await repository.DeleteAsync(id, deletedBy);
+                await repository.SaveAsync();
                 return MapDto(result);
             }
             catch (Exception)
@@ -75,6 +78,7 @@ namespace Task.Application.Service
             try
             {
                 var result = await repository.RemoveAsync(id, removedBy);
+                await repository.SaveAsync();
                 return MapDto(result);
             }
             catch (Exception)
